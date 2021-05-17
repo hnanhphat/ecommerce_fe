@@ -19,14 +19,16 @@ const login = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.LOGIN_REQUEST, payload: null });
     const res = await api.post("/auth/login", data);
-    console.log(res);
     localStorage.setItem("accessToken", res.data.data.accessToken);
     api.defaults.headers["authorization"] =
       "Bearer " + localStorage.getItem("accessToken");
     dispatch(routeActions.redirect("/"));
     dispatch({
       type: types.LOGIN_SUCCESS,
-      payload: res.data.data.accessToken,
+      payload: {
+        accessToken: res.data.data.accessToken,
+        isAdmin: res.data.data.user.isAdmin,
+      },
     });
     toast.success(res.data.message);
   } catch (error) {

@@ -222,6 +222,111 @@
           @include tranform_c(translate(50%, -50%));
         }
       }
+      .dropdown {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        top: 100%;
+        right: -8px;
+        width: 400px;
+        max-height: 400px;
+        padding-top: 20px;
+        overflow: auto;
+        z-index: 20;
+        transform-origin: top right;
+        @include tranform_c(scale(0));
+        @include transition_c(all 0.3s ease-out);
+        &::after {
+          content: "";
+          position: absolute;
+          border-bottom: 5px solid $white;
+          border-left: 5px solid transparent;
+          border-right: 5px solid transparent;
+          top: 15px;
+          right: 15px;
+        }
+        li {
+          background: $white;
+          display: flex;
+          align-items: center;
+          padding: 15px;
+          position: relative;
+          &:not(:last-child) {
+            border-bottom: 1px solid $grey-light;
+          }
+          .img {
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 3px;
+            width: 80px;
+            height: 80px;
+          }
+          .content {
+            display: flex;
+            flex-wrap: wrap;
+            width: calc(100% - 95px);
+            padding: 0 20px;
+            .name {
+              color: $grey;
+              width: 100%;
+              font-size: 16px;
+              margin-bottom: 5px;
+              line-height: 20px;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
+            .price {
+              display: flex;
+              align-items: center;
+              line-height: 20px;
+              &__before {
+                color: $grey;
+                font-size: 14px;
+                font-weight: bold;
+                margin-right: 8px;
+                text-decoration: line-through;
+              }
+              &__after {
+                font-size: 16px;
+                font-weight: bold;
+              }
+            }
+            .quantity {
+              font-size: 14px;
+              padding-left: 10px;
+              margin-left: 10px;
+              position: relative;
+              &::before {
+                content: "";
+                position: absolute;
+                background: $black;
+                width: 1px;
+                height: 60%;
+                top: 50%;
+                left: 0;
+                @include tranform_c(translateY(-50%));
+              }
+            }
+          }
+          button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 15px;
+            height: 15px;
+          }
+        }
+      }
+
+      @include respond(hover) {
+        &:hover {
+          .dropdown {
+            @include tranform_c(scale(1));
+          }
+        }
+      }
     }
   }
 

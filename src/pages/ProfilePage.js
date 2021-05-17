@@ -168,7 +168,11 @@ const ProfilePage = () => {
                 </div>
               ) : (
                 <div className="group group--btn">
-                  <button type="submit">Update</button>
+                  {loading ? (
+                    <button type="submit">Pending...</button>
+                  ) : (
+                    <button type="submit">Update</button>
+                  )}
                   <button
                     type="cancle"
                     onClick={handleCancle}

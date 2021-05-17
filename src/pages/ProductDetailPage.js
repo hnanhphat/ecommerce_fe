@@ -1,10 +1,11 @@
 import noimg from "../noimg.jpeg";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router";
 import { decksActions } from "../redux/actions/decks.actions";
 import { routeActions } from "../redux/actions/route.actions";
+import { cartActions } from "../redux/actions/cart.actions";
 import Breadcrumb from "../components/Breadcrumb";
 
 const ProductDetailPage = () => {
@@ -13,10 +14,18 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const redirectTo = useSelector((state) => state.route.redirectTo);
   const decks = useSelector((state) => state.decks.singleDecks.data);
-  const isAmin = useSelector((state) => state.user.isAdmin);
+  const isAmin = useSelector((state) => state.auth.isAdmin);
+  const [quantity, setQuantity] = useState(1);
 
   const handleDelete = (val) => {
     dispatch(decksActions.deleteDecks(val));
+  };
+
+  const handleAddCart = (val) => {
+    dispatch(cartActions.createCart({ decks: val, quantity: quantity }));
+    setTimeout(() => {
+      dispatch(cartActions.getUserCart());
+    }, 500);
   };
 
   useEffect(() => {
@@ -85,7 +94,15 @@ const ProductDetailPage = () => {
               </span>
             </p>
             <p className="description">{decks && decks.data.description}</p>
-            <button className="btn-cart">
+            <input
+              type="number"
+              name="quantity"
+              min="1"
+              placeholder="1"
+              className="quantity"
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+            <button onClick={() => handleAddCart(id)} className="btn-cart">
               <svg
                 aria-hidden="true"
                 focusable="false"

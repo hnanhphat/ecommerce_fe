@@ -2,6 +2,7 @@ import * as types from "../constants/auth.constants";
 
 const initialState = {
   isAuth: localStorage.getItem("accessToken"),
+  isAdmin: false,
   loading: false,
   error: "",
 };
@@ -32,11 +33,13 @@ const authReducer = (state = initialState, action) => {
     case types.LOGIN_SUCCESS:
     case types.FACEBOOK_SUCCESS:
     case types.GOOGLE_SUCCESS:
+      state.isAuth = payload.accessToken;
+      state.isAdmin = payload.isAdmin;
       state.loading = false;
-      state.isAuth = payload;
       break;
     case types.LOGOUT_SUCCESS:
       state.isAuth = "";
+      state.isAdmin = false;
       state.loading = false;
       break;
     case types.VERIFY_SUCCESS:

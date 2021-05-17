@@ -7,7 +7,6 @@ const initialState = {
   currentPage: 1,
   allUser: [],
   friendship: [],
-  isAdmin: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -24,8 +23,7 @@ const userReducer = (state = initialState, action) => {
       break;
     case types.GET_USER_SUCCESS:
     case types.UPDATE_USER_SUCCESS:
-      state.currentUser = payload.data;
-      state.isAdmin = payload.isAdmin;
+      state.currentUser = payload;
       state.loading = false;
       break;
     default:

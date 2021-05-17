@@ -5,10 +5,8 @@ import { toast } from "react-toastify";
 
 const createDecks = (data) => async (dispatch) => {
   try {
-    console.log(data);
     dispatch({ type: types.CREATE_DECKS_REQUEST, payload: null });
     const res = await api.post(`/decks`, data);
-    console.log(res);
     dispatch(routeActions.redirect("/"));
     dispatch({ type: types.CREATE_DECKS_SUCCESS, payload: res });
     toast.success(res.data.message);
