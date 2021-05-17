@@ -91,30 +91,6 @@
           }
         }
       }
-      .group-btns {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 12px;
-        a,
-        button {
-          border-radius: 5px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: calc(50% - 4px);
-          height: 30px;
-          font-size: 16px;
-          &.edit {
-            background: $yellow;
-            color: $white;
-          }
-          &.delete {
-            border: 2px solid $yellow;
-            color: $yellow;
-          }
-        }
-      }
     }
   }
   &__not-found {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Breadcrumb = ({ branch, leaf }) => {
+const Breadcrumb = ({ trunk, branch, branchTxt, leaf }) => {
   return (
     <ul id="breadcrumb" className="breadcrumb">
       <li>
@@ -23,10 +23,19 @@ const Breadcrumb = ({ branch, leaf }) => {
           </svg>
         </Link>
       </li>
+      {trunk ? (
+        <li>
+          <Link to={`/${trunk}`}>
+            {trunk[0].toUpperCase() + trunk.slice(1)}
+          </Link>
+        </li>
+      ) : (
+        ""
+      )}
       {branch ? (
         <li>
           <Link to={`/${branch}`}>
-            {branch[0].toUpperCase() + branch.slice(1)}
+            {branchTxt ? branchTxt : branch[0].toUpperCase() + branch.slice(1)}
           </Link>
         </li>
       ) : (

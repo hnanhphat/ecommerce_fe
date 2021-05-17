@@ -47,7 +47,9 @@ const decksReducer = (state = initialState, action) => {
       break;
     case types.EDIT_SINGLE_SUCCESS:
       state.loading = false;
+      break;
     case types.DELETE_SINGLE_SUCCESS:
+      state.singleDecks = {};
       state.loading = false;
       break;
     default:

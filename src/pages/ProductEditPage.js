@@ -13,27 +13,16 @@ const ProductEditPage = () => {
   const redirectTo = useSelector((state) => state.route.redirectTo);
 
   const [someBoolean, setSomeBoolean] = useState(true);
-  // const [formInput, setFormInput] = useState({
-  //   name: singleDecks && singleDecks.data.name,
-  //   defaultPrice: singleDecks && singleDecks.data.defaultPrice,
-  //   oficialPrice: singleDecks && singleDecks.data.oficialPrice,
-  //   images: singleDecks && singleDecks.data.images,
-  //   genres: singleDecks && singleDecks.data.genres,
-  //   size: singleDecks && singleDecks.data.size,
-  //   color: singleDecks && singleDecks.data.color,
-  //   description: singleDecks && singleDecks.data.description,
-  //   sale: singleDecks && singleDecks.data.sale,
-  // });
   const [formInput, setFormInput] = useState({
-    name: "",
-    defaultPrice: null,
-    oficialPrice: null,
-    images: "",
-    genres: "" || "Tarot",
-    size: "" || "Large",
-    color: "" || "Black",
-    description: "",
-    sale: false,
+    name: singleDecks && singleDecks.data.name,
+    defaultPrice: singleDecks && singleDecks.data.defaultPrice,
+    oficialPrice: singleDecks && singleDecks.data.oficialPrice,
+    images: singleDecks && singleDecks.data.images,
+    genres: singleDecks && singleDecks.data.genres,
+    size: singleDecks && singleDecks.data.size,
+    color: singleDecks && singleDecks.data.color,
+    description: singleDecks && singleDecks.data.description,
+    sale: singleDecks && singleDecks.data.sale,
   });
 
   const handleEdit = (e) => {
@@ -123,7 +112,12 @@ const ProductEditPage = () => {
 
   return (
     <div id="product-edit" className="product-edit">
-      <Breadcrumb branch="products" leaf="Edit Product" />
+      <Breadcrumb
+        trunk="products"
+        branch={`products/${id}`}
+        branchTxt={singleDecks && singleDecks.data.name}
+        leaf="Edit Product"
+      />
       <div className="product-edit__area">
         <div className="product-edit__container">
           <h3 className="tit">Create New Product</h3>
@@ -258,11 +252,7 @@ const ProductEditPage = () => {
                 <span>Genre</span>
                 <select
                   name="genres"
-                  defaultValue={
-                    someBoolean
-                      ? singleDecks && singleDecks.data.genres
-                      : "Tarot"
-                  }
+                  defaultValue={singleDecks && singleDecks.data.genres}
                   onChange={handleChange}
                 >
                   <option value="Tarot">Tarot</option>
@@ -276,9 +266,7 @@ const ProductEditPage = () => {
                 <span>Size</span>
                 <select
                   name="size"
-                  defaultValue={
-                    someBoolean ? singleDecks && singleDecks.data.size : "Large"
-                  }
+                  defaultValue={singleDecks && singleDecks.data.size}
                   onChange={handleChange}
                 >
                   <option value="Large">Large</option>
@@ -290,11 +278,7 @@ const ProductEditPage = () => {
                 <span>Color</span>
                 <select
                   name="color"
-                  defaultValue={
-                    someBoolean
-                      ? singleDecks && singleDecks.data.color
-                      : "Black"
-                  }
+                  defaultValue={singleDecks && singleDecks.data.color}
                   onChange={handleChange}
                 >
                   <option value="Black">Black</option>

@@ -54,7 +54,7 @@ const editDecks = (data, id) => async (dispatch) => {
     console.log(data);
     const res = await api.put(`/decks/${id}`, data);
     console.log(res);
-    dispatch(routeActions.redirect("/"));
+    dispatch(routeActions.redirect("/products"));
     dispatch({ type: types.EDIT_SINGLE_SUCCESS, payload: res });
     toast.success(res.data.message);
   } catch (error) {
@@ -67,6 +67,7 @@ const deleteDecks = (id) => async (dispatch) => {
     dispatch({ type: types.DELETE_SINGLE_REQUEST, payload: null });
     const res = await api.delete(`/decks/${id}`);
     dispatch({ type: types.DELETE_SINGLE_SUCCESS, payload: res });
+    dispatch(routeActions.redirect("/products"));
     toast.success(res.data.message);
   } catch (error) {
     dispatch({ type: types.DELETE_SINGLE_FAILURE, payload: error.message });

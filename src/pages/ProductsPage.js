@@ -8,7 +8,6 @@ import { decksActions } from "../redux/actions/decks.actions";
 const ProductsPage = () => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
-  const isAmin = useSelector((state) => state.user.isAdmin);
   const [genres, setGenres] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
@@ -25,26 +24,11 @@ const ProductsPage = () => {
     setColor(val);
   };
 
-  const handleDelete = (val) => {
-    dispatch(decksActions.deleteDecks(val));
-    setTimeout(() => {
-      dispatch(
-        decksActions.getListOfDecks(
-          1,
-          `&limit=10${genres ? `&genres=${genres}` : ""}${
-            size ? `&size=${size}` : ""
-          }${color ? `&color=${color}` : ""}`,
-          "decks"
-        )
-      );
-    }, 1000);
-  };
-
   useEffect(() => {
     dispatch(
       decksActions.getListOfDecks(
         1,
-        `&limit=10${genres ? `&genres=${genres}` : ""}${
+        `&limit=20${genres ? `&genres=${genres}` : ""}${
           size ? `&size=${size}` : ""
         }${color ? `&color=${color}` : ""}`,
         "decks"
@@ -113,24 +97,6 @@ const ProductsPage = () => {
                     <span className="price__after">${deck.oficialPrice}</span>
                   </p>
                 </Link>
-                {isAmin ? (
-                  <div className="group-btns">
-                    <Link
-                      to={`/admin/product-edit/${deck._id}`}
-                      className="edit"
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(deck._id)}
-                      className="delete"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                ) : (
-                  ""
-                )}
               </li>
             ))}
           </ul>
