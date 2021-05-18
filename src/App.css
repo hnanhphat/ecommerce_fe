@@ -186,6 +186,134 @@ input:focus {
   width: 20px;
   margin-right: 6px;
 }
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76%;
+  padding-top: 20px;
+  margin-left: auto;
+}
+.pagination .page-item {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 5px;
+}
+.pagination .page-item .page-link {
+  border-radius: 50%;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+  position: relative;
+  z-index: 10;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -ms-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+.pagination .page-item .page-link::before {
+  content: "";
+  position: absolute;
+  background: #000;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  transform-origin: center;
+  -webkit-transform: translate(-50%, -50%) scale(0);
+  -moz-transform: translate(-50%, -50%) scale(0);
+  -ms-transform: translate(-50%, -50%) scale(0);
+  -o-transform: translate(-50%, -50%) scale(0);
+  transform: translate(-50%, -50%) scale(0);
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -ms-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+.pagination .page-item .page-link span.sr-only {
+  font-size: 0;
+}
+@media only screen and (min-width: 48em) {
+  .pagination .page-item .page-link:hover {
+    color: #fff;
+    opacity: 1;
+  }
+  .pagination .page-item .page-link:hover::before {
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    -moz-transform: translate(-50%, -50%) scale(1);
+    -ms-transform: translate(-50%, -50%) scale(1);
+    -o-transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.pagination .page-item.disabled, .pagination .page-item.active {
+  pointer-events: none;
+}
+.pagination .page-item.active .page-link {
+  color: #000;
+}
+.pagination .page-item.disabled {
+  visibility: hidden;
+}
+.pagination .page-item.dotted {
+  pointer-events: none;
+}
+.pagination .page-item:first-child .page-link, .pagination .page-item:last-child .page-link {
+  font-size: 0;
+}
+.pagination .page-item:first-child .page-link::after, .pagination .page-item:last-child .page-link::after {
+  content: "";
+  position: absolute;
+  border-top: 2px solid #000;
+  border-right: 2px solid #000;
+  width: 8px;
+  height: 8px;
+  top: 50%;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+.pagination .page-item:first-child .page-link::after {
+  left: calc(50% + 2px);
+  -webkit-transform: translate(-50%, -50%) rotate(-135deg);
+  -moz-transform: translate(-50%, -50%) rotate(-135deg);
+  -ms-transform: translate(-50%, -50%) rotate(-135deg);
+  -o-transform: translate(-50%, -50%) rotate(-135deg);
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+@media only screen and (min-width: 48em) {
+  .pagination .page-item:first-child .page-link:hover::after {
+    border-color: #fff;
+  }
+}
+.pagination .page-item:last-child .page-link::after {
+  left: calc(50% - 2px);
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+  -moz-transform: translate(-50%, -50%) rotate(45deg);
+  -ms-transform: translate(-50%, -50%) rotate(45deg);
+  -o-transform: translate(-50%, -50%) rotate(45deg);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+@media only screen and (min-width: 48em) {
+  .pagination .page-item:last-child .page-link:hover::after {
+    border-color: #fff;
+  }
+}
+
 .footer {
   background: #000;
   padding: 60px 2vw;
@@ -1679,6 +1807,7 @@ input:focus {
 
 .products .container {
   display: flex;
+  flex-wrap: wrap;
   padding: 40px 0;
 }
 .products__sidebar {

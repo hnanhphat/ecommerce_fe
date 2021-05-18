@@ -2,15 +2,19 @@ import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Breadcrumb from "../components/Breadcrumb";
 import { decksActions } from "../redux/actions/decks.actions";
+import Breadcrumb from "../components/Breadcrumb";
+import PaginationBar from "../components/PaginationBar";
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
+  const totalPage = useSelector((state) => state.decks.totalPages);
+  console.log(totalPage);
   const [genres, setGenres] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleGenres = (val) => {
     setGenres(val);
@@ -27,14 +31,14 @@ const ProductsPage = () => {
   useEffect(() => {
     dispatch(
       decksActions.getListOfDecks(
-        1,
+        currentPage,
         `&limit=20${genres ? `&genres=${genres}` : ""}${
           size ? `&size=${size}` : ""
         }${color ? `&color=${color}` : ""}`,
         "decks"
       )
     );
-  }, [dispatch, genres, size, color]);
+  }, [dispatch, genres, size, color, currentPage]);
 
   return (
     <div id="products" className="products">
@@ -103,6 +107,11 @@ const ProductsPage = () => {
         ) : (
           <p className="products__not-found">No products were found</p>
         )}
+        <PaginationBar
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPage={totalPage}
+        />
       </div>
     </div>
   );
