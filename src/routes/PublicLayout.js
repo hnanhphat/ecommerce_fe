@@ -8,6 +8,7 @@ import ProfilePage from "../pages/ProfilePage";
 import CollectionsPage from "../pages/CollectionsPage";
 import ProductsPage from "../pages/ProductsPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
+import NewsPage from "../pages/NewsPage";
 import VerifyPage from "../pages/VerifyPage";
 import NotFoundPage from "../pages/NotFoundPage";
 
@@ -21,6 +22,7 @@ const PublicLayout = () => {
         <Route exact path="/collections" component={CollectionsPage} />
         <Route exact path="/products" component={ProductsPage} />
         <Route exact path="/products/:id" component={ProductDetailPage} />
+        <Route exact path="/news" component={NewsPage} />
         <Route exact path="/verify/:code" component={VerifyPage} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
