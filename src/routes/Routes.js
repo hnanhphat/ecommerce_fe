@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 
 // ROUTES
 import AdminLayout from "./AdminLayout";
-import PublicLayout from "./PublicLayout";
+// import PublicLayout from "./PublicLayout";
 // import ProtectedRoute from "./ProtectedRoute";
 
 const Routes = () => {
