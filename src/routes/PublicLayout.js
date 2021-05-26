@@ -8,7 +8,7 @@ import ProfilePage from "../pages/ProfilePage";
 import CollectionsPage from "../pages/CollectionsPage";
 import ProductsPage from "../pages/ProductsPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
-// import NewsPage from "../pages/NewsPage";
+import NewsPage from "../pages/NewsPage";
 import ReaderPage from "../pages/ReaderPage";
 import CartPage from "../pages/CartPage";
 import VerifyPage from "../pages/VerifyPage";
@@ -24,7 +24,7 @@ const PublicLayout = () => {
         <Route exact path="/collections" component={CollectionsPage} />
         <Route exact path="/products" component={ProductsPage} />
         <Route exact path="/products/:id" component={ProductDetailPage} />
-        {/* <Route exact path="/news" component={NewsPage} /> */}
+        <Route exact path="/news" component={NewsPage} />
         <Route exact path="/readers" component={ReaderPage} />
         <Route exact path="/admin/cart" component={CartPage} />
         <Route exact path="/verify/:code" component={VerifyPage} />
