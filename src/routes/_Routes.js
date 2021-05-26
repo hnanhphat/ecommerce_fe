@@ -13,10 +13,16 @@ import ProtectedRoute from "./ProtectedRoute";
 
 const Routes = () => {
   return (
-    <div>
+    <>
       something
-      <AlertMsg />
-    </div>
+      {/* <AlertMsg />
+      <Header />
+      <Switch>
+        <ProtectedRoute path="/admin" component={AdminLayout} />
+        <Route path="/" component={PublicLayout} />
+      </Switch>
+      <Footer /> */}
+    </>
   );
 };
 
