@@ -285,6 +285,7 @@ const NewsPage = () => {
                           <a
                             href={`https://www.facebook.com/sharer/sharer.php?u=https%3A//hnanhphatecommerce.netlify.app/`}
                             target="_blank"
+                            rel="noopener noreferrer"
                             className="upper"
                           >
                             Share
