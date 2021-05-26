@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { newsActions } from "../redux/actions/news.actions";
-// import Moment from "moment";
+import Moment from "react-moment";
 
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
@@ -136,7 +136,7 @@ const NewsPage = () => {
                         <div className="info">
                           <p className="name">{el.author.username}</p>
                           <p className="time">
-                            {/* <Moment fromNow>{el.createdAt}</Moment> */}
+                            <Moment fromNow>{el.createdAt}</Moment>
                           </p>
                         </div>
                       </div>
@@ -459,9 +459,9 @@ const NewsPage = () => {
                                     </div>
                                     <p className="time">
                                       -{" "}
-                                      {/* <Moment fromNow>
+                                      <Moment fromNow>
                                         {review.createdAt}
-                                      </Moment> */}
+                                      </Moment>
                                     </p>
                                   </div>
                                 </div>
