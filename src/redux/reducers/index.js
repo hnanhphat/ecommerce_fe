@@ -13,7 +13,7 @@ export default combineReducers({
   auth: authReducer,
   cart: cartReducer,
   decks: decksReducer,
-  // news: newsReducer,
+  news: newsReducer,
   order: orderReducer,
   route: routeReducer,
   user: userReducer,
