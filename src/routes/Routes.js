@@ -8,18 +8,17 @@ import Footer from "../components/Footer";
 
 // ROUTES
 import AdminLayout from "./AdminLayout";
-// import PublicLayout from "./PublicLayout";
+import PublicLayout from "./PublicLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
 const Routes = () => {
   return (
     <>
-      something
       <AlertMsg />
       <Header />
       <Switch>
         <ProtectedRoute path="/admin" component={AdminLayout} />
-        {/* <Route path="/" component={PublicLayout} /> */}
+        <Route path="/" component={PublicLayout} />
       </Switch>
       <Footer />
     </>
