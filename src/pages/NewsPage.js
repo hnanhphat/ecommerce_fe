@@ -136,7 +136,7 @@ const NewsPage = () => {
                         <div className="info">
                           <p className="name">{el.author.username}</p>
                           <p className="time">
-                            {/* <Moment fromNow>{el.createdAt}</Moment> */}
+                            <Moment fromNow>{el.createdAt}</Moment>
                           </p>
                         </div>
                       </div>
@@ -459,9 +459,9 @@ const NewsPage = () => {
                                     </div>
                                     <p className="time">
                                       -{" "}
-                                      {/* <Moment fromNow>
+                                      <Moment fromNow>
                                         {review.createdAt}
-                                      </Moment> */}
+                                      </Moment>
                                     </p>
                                   </div>
                                 </div>
