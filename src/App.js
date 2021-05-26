@@ -1,10 +1,9 @@
 import React from "react";
 import "./App.css";
-// import Routes from "./routes/Routes";
+import Routes from "./routes/Routes";
 
 function App() {
-  // return <Routes />;
-  return <>hihi</>;
+  return <Routes />;
 }
 
 export default App;
