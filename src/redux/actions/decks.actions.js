@@ -49,9 +49,7 @@ const removeSearch = () => (dispatch) => {
 const editDecks = (data, id) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_SINGLE_REQUEST, payload: null });
-    console.log(data);
     const res = await api.put(`/decks/${id}`, data);
-    console.log(res);
     dispatch(routeActions.redirect("/products"));
     dispatch({ type: types.EDIT_SINGLE_SUCCESS, payload: res });
     toast.success(res.data.message);

@@ -537,10 +537,14 @@
     font-weight: bold;
     text-align: center;
     padding: 20px;
+    a,
     button {
       background: $orange;
       border-radius: 100px;
       color: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
       max-width: 120px;
       height: 38px;

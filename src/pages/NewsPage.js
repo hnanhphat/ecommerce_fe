@@ -1,5 +1,6 @@
 import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { newsActions } from "../redux/actions/news.actions";
 import Moment from "react-moment";
@@ -45,7 +46,11 @@ const NewsPage = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchInput(`&title=${e.target.searchInput.value}`);
-    setCateStt("");
+    if (e.target.searchInput.value) {
+      setCateStt("");
+    } else {
+      setCateStt("All");
+    }
     e.target.reset();
   };
 
@@ -490,14 +495,18 @@ const NewsPage = () => {
         ) : (
           <p className="news-page__no-item">
             Don't have any news post.
-            <button
-              onClick={() => {
-                setCateStt("All");
-                setSearchInput(``);
-              }}
-            >
-              Go back
-            </button>
+            {searchInput ? (
+              <button
+                onClick={() => {
+                  setCateStt("All");
+                  setSearchInput(``);
+                }}
+              >
+                Go back
+              </button>
+            ) : (
+              <Link to="/">Go home</Link>
+            )}
           </p>
         )}
         {totalPage > 1 && news && news.data.news.length ? (

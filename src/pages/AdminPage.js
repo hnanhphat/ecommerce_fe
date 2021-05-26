@@ -2,7 +2,7 @@ import React from "react";
 
 const AdminPage = () => {
   return (
-    <div id="admin" className="admin">
+    <div>
       <h1>This is Admin Page</h1>
     </div>
   );

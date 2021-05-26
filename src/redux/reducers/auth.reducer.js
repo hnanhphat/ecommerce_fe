@@ -2,7 +2,7 @@ import * as types from "../constants/auth.constants";
 
 const initialState = {
   isAuth: localStorage.getItem("accessToken"),
-  isAdmin: false,
+  isAdmin: localStorage.getItem("isAdmin"),
   loading: false,
   error: "",
 };

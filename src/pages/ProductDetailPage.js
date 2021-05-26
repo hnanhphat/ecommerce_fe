@@ -23,9 +23,6 @@ const ProductDetailPage = () => {
 
   const handleAddCart = (val) => {
     dispatch(cartActions.createCart({ decks: val, quantity: quantity }));
-    setTimeout(() => {
-      dispatch(cartActions.getUserCart());
-    }, 500);
   };
 
   useEffect(() => {

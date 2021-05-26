@@ -1,0 +1,205 @@
+.fade {
+  @include transition_c(opacity 0.15s ease-out);
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+
+  &.fade {
+    opacity: 0;
+  }
+
+  &.show {
+    opacity: 0.5;
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1060;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+
+  &.fade .modal-dialog {
+    @include tranform_c(translate(-50%, -50%));
+    @include transition_c(all 0.3s ease-out);
+  }
+
+  .modal-dialog {
+    position: absolute;
+    width: 100%;
+    max-width: 740px;
+    top: 50%;
+    left: 50%;
+    .modal-content {
+      background: $white;
+      border-radius: 10px;
+      overflow: hidden;
+      .modal-header {
+        background: $orange;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        .modal-title {
+          color: $white;
+          font-size: 18px;
+          font-weight: bold;
+        }
+        .close {
+          width: 15px;
+          height: 15px;
+          margin-right: 5px;
+          position: relative;
+          &::before,
+          &::after {
+            content: "";
+            position: absolute;
+            background: $white;
+            width: 100%;
+            height: 3px;
+            top: 50%;
+            left: 50%;
+          }
+          &::before {
+            @include tranform_c(translate(-50%, -50%) rotate(-45deg));
+          }
+          &::after {
+            @include tranform_c(translate(-50%, -50%) rotate(-135deg));
+          }
+          span {
+            font-size: 0;
+          }
+        }
+      }
+      .modal-body {
+        width: 100%;
+        max-width: 480px;
+        padding: 20px 15px 0;
+        margin: 0 auto;
+        .reader {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &__avatar {
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: 2px solid $orange;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+          }
+          &__info {
+            padding-left: 15px;
+            .name {
+              font-size: 15px;
+              font-weight: bold;
+              line-height: 22px;
+            }
+            .position {
+              color: $orange;
+              font-size: 12px;
+              line-height: 18px;
+            }
+          }
+        }
+        .details {
+          &__tit {
+            text-align: center;
+            padding-bottom: 10px;
+          }
+          &__list {
+            max-height: 168px;
+            overflow: auto;
+            padding: 10px 0;
+            li {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 5px 0;
+              p {
+                em {
+                  font-size: 13px;
+                  padding-left: 8px;
+                }
+              }
+            }
+          }
+          &__total {
+            border-top: 1px solid $orange;
+            color: $orange;
+            font-weight: bold;
+            text-align: right;
+            padding-top: 10px;
+          }
+        }
+        .form {
+          border-top: 1px solid $orange;
+          padding: 20px 0;
+          margin-top: 20px;
+          &__group {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin: 0 auto;
+            &:not(:last-child) {
+              padding-bottom: 10px;
+            }
+            .item {
+              width: calc(50% - 5px);
+              &--full {
+                width: 100%;
+              }
+              input,
+              select {
+                background: rgba($color: $orange, $alpha: 0.08);
+                border: none;
+                width: 100%;
+                height: 38px;
+                padding: 8px 10px;
+                @include addPrefix(appearance, none);
+              }
+            }
+          }
+        }
+      }
+      .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 0 15px 30px;
+        button {
+          background: $orange;
+          border-radius: 100px;
+          color: $white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 30px;
+          opacity: 0.5;
+          pointer-events: none;
+          &.active {
+            opacity: 1;
+            pointer-events: auto;
+          }
+        }
+      }
+    }
+  }
+}

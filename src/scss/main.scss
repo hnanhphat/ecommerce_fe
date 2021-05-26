@@ -10,10 +10,12 @@
 @import "./base/utilities";
 
 // COMPONENTS
+@import "./components/admin-sidebar";
 @import "./components/breadcrumb";
 @import "./components/button";
 @import "./components/loading";
 @import "./components/main-visual";
+@import "./components/modal";
 @import "./components/pagination";
 
 //LAYOUT
@@ -23,6 +25,8 @@
 
 // PAGES
 @import "./pages/404";
+@import "./pages/admin";
+@import "./pages/cart";
 @import "./pages/home";
 @import "./pages/login";
 @import "./pages/news";
@@ -30,4 +34,5 @@
 @import "./pages/products-detail";
 @import "./pages/products";
 @import "./pages/profile";
+@import "./pages/reader";
 @import "./pages/verify";

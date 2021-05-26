@@ -4,7 +4,7 @@ import * as types from "../constants/news.constants";
 const getListOfNews = (pageNumber, option) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_LIST_REQUEST });
-    const res = await api.get(`/news?page=${pageNumber + option}&limit=1`);
+    const res = await api.get(`/news?page=${pageNumber + option}`);
     dispatch({
       type: types.GET_LIST_SUCCESS,
       payload: {

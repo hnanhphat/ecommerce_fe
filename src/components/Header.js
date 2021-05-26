@@ -17,7 +17,6 @@ const Header = () => {
   const [search, setSearch] = useState("");
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
-  const isAdmin = useSelector((state) => state.auth.isAdmin);
   const carts = useSelector((state) => state.cart.carts.data);
 
   const handleLogout = () => {
@@ -62,7 +61,7 @@ const Header = () => {
 
   useEffect(() => {
     if (isAuth) {
-      dispatch(cartActions.getUserCart());
+      dispatch(cartActions.getUserCart(1, "&isOrdered=false"));
     }
   }, [dispatch, isAuth]);
 
@@ -74,27 +73,23 @@ const Header = () => {
       }`}
     >
       <div className="header__container">
-        {isAdmin ? (
-          <div className="directory">
-            <div className="directory__item">
-              <Link to="/admin/product-add" className="upper">
-                Create Product
-              </Link>
-            </div>
-            <div className="directory__item">
-              <Link to="/news-add" className="upper">
-                Create News
-              </Link>
-            </div>
+        <div className="directory">
+          <div className="directory__item">
+            <Link to="/products" className="upper">
+              Products
+            </Link>
           </div>
-        ) : (
-          <div className="directory">
-            <div className="directory__item">
-              <Link to="/products" className="upper">
-                Products
-              </Link>
-            </div>
-            <div className="directory__item">
+          <div className="directory__item">
+            <Link to="/readers" className="upper">
+              Readers
+            </Link>
+          </div>
+          <div className="directory__item">
+            <Link to="/news" className="upper">
+              News
+            </Link>
+          </div>
+          {/* <div className="directory__item">
               <Link to="/faq" className="upper">
                 FAQ
               </Link>
@@ -108,9 +103,8 @@ const Header = () => {
               <Link to="/contact" className="upper">
                 Contact
               </Link>
-            </div>
-          </div>
-        )}
+            </div> */}
+        </div>
         {isAuth ? (
           <div className="user">
             <p className="user__name">
@@ -145,30 +139,24 @@ const Header = () => {
                   ></path>
                 </svg>
               </Link>
-              {isAdmin ? (
-                <>
-                  <Link to="/users">
-                    <span>List Users</span>
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      data-prefix="fas"
-                      data-icon="users"
-                      className="svg-inline--fa fa-users fa-w-20"
-                      role="img"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 640 512"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z"
-                      ></path>
-                    </svg>
-                  </Link>
-                </>
-              ) : (
-                ""
-              )}
+              <Link to="/admin">
+                <span>Dashboard</span>
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="columns"
+                  className="svg-inline--fa fa-columns fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64V160h160v256zm224 0H288V160h160v256z"
+                  ></path>
+                </svg>
+              </Link>
               <Link to="/" onClick={handleLogout}>
                 <span>Logout</span>
                 <svg
@@ -263,7 +251,7 @@ const Header = () => {
             <div className="dropdown"></div>
           </div>
           <div className="other__item">
-            <div className="icon">
+            <Link to="/cart" className="icon">
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -279,60 +267,66 @@ const Header = () => {
                   d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"
                 ></path>
               </svg>
-              {carts && carts.data.totalCart ? (
-                <span className="number">{carts.data.totalCart}</span>
+              {isAuth && carts && carts.data.carts.length ? (
+                <span className="number">
+                  {carts.data.carts.reduce((a, b) => a + b.quantity, 0)}
+                </span>
               ) : (
                 <span className="number">0</span>
               )}
-            </div>
-            <ul className="dropdown">
-              {carts &&
-                carts.data.cart.map((el) => (
-                  <li key={el._id}>
-                    <div
-                      className="img"
-                      style={{
-                        backgroundImage: `url('${
-                          el.decks.images ? el.decks.images : noimg
-                        }')`,
-                      }}
-                    ></div>
-                    <div className="content">
-                      <p className="name">{el.decks.name}</p>
-                      <p className="price">
-                        {el.decks.defaultPrice ? (
-                          <span className="price__before">
-                            ${el.decks.defaultPrice}
+            </Link>
+            {isAuth ? (
+              <ul className="dropdown">
+                {carts &&
+                  carts.data.carts.map((el) => (
+                    <li key={el._id}>
+                      <div
+                        className="img"
+                        style={{
+                          backgroundImage: `url('${
+                            el.decks.images ? el.decks.images : noimg
+                          }')`,
+                        }}
+                      ></div>
+                      <div className="content">
+                        <p className="name">{el.decks.name}</p>
+                        <p className="price">
+                          {el.decks.defaultPrice ? (
+                            <span className="price__before">
+                              ${el.decks.defaultPrice}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                          <span className="price__after">
+                            ${el.decks.oficialPrice}
                           </span>
-                        ) : (
-                          ""
-                        )}
-                        <span className="price__after">
-                          ${el.decks.oficialPrice}
-                        </span>
-                      </p>
-                      <p className="quantity">{el.quantity}pc</p>
-                    </div>
-                    <button onClick={() => handleDeleteCart(el._id)}>
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="times"
-                        className="svg-inline--fa fa-times fa-w-11"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 352 512"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                        ></path>
-                      </svg>
-                    </button>
-                  </li>
-                ))}
-            </ul>
+                        </p>
+                        <p className="quantity">{el.quantity}pc</p>
+                      </div>
+                      <button onClick={() => handleDeleteCart(el._id)}>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="times"
+                          className="svg-inline--fa fa-times fa-w-11"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 352 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
