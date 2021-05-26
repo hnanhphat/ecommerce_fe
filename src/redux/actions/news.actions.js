@@ -28,19 +28,19 @@ const createReaction = (data) => async (dispatch) => {
   }
 };
 
-const createReview = (data) => async (dispatch) => {
-  try {
-    dispatch({ type: types.CREATE_REVIEW_REQUEST, payload: null });
-    const res = await api.post(`/review`, data);
-    dispatch({ type: types.CREATE_REVIEW_SUCCESS, payload: res });
-    dispatch(getListOfNews());
-  } catch (error) {
-    dispatch({ type: types.CREATE_REVIEW_FAILURE, payload: error.message });
-  }
-};
+// const createReview = (data) => async (dispatch) => {
+//   try {
+//     dispatch({ type: types.CREATE_REVIEW_REQUEST, payload: null });
+//     const res = await api.post(`/review`, data);
+//     dispatch({ type: types.CREATE_REVIEW_SUCCESS, payload: res });
+//     dispatch(getListOfNews());
+//   } catch (error) {
+//     dispatch({ type: types.CREATE_REVIEW_FAILURE, payload: error.message });
+//   }
+// };
 
 export const newsActions = {
   getListOfNews,
   createReaction,
-  createReview,
+  // createReview,
 };
