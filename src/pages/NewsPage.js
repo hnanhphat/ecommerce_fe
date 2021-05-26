@@ -1,7 +1,7 @@
-import noimg from "../noimg.jpeg";
+// import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+// import { Link } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
 // import { newsActions } from "../redux/actions/news.actions";
 import Moment from "react-moment";
 
@@ -10,17 +10,17 @@ import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
 
 const NewsPage = () => {
-  const dispatch = useDispatch();
-  const news = useSelector((state) => state.news.news.data);
-  const totalPage = useSelector((state) => state.news.totalPages);
-  const currentUser = useSelector((state) => state.user.currentUser.data);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showComment, setShowComment] = useState(false);
-  const [showAllComments, setShowAllComments] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const [cateStt, setCateStt] = useState("All");
+  // const dispatch = useDispatch();
+  // const news = useSelector((state) => state.news.news.data);
+  // const totalPage = useSelector((state) => state.news.totalPages);
+  // const currentUser = useSelector((state) => state.user.currentUser.data);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [showComment, setShowComment] = useState(false);
+  // const [showAllComments, setShowAllComments] = useState(false);
+  // const [searchInput, setSearchInput] = useState("");
+  // const [cateStt, setCateStt] = useState("All");
 
-  console.log(news);
+  // console.log(news);
 
   // const handleReaction = (typeVal, idVal, emojiVal) => {
   //   const { targetType, targetId, emoji } = {
@@ -44,16 +44,16 @@ const NewsPage = () => {
   //   e.target.reset();
   // };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setSearchInput(`&title=${e.target.searchInput.value}`);
-    if (e.target.searchInput.value) {
-      setCateStt("");
-    } else {
-      setCateStt("All");
-    }
-    e.target.reset();
-  };
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+  //   setSearchInput(`&title=${e.target.searchInput.value}`);
+  //   if (e.target.searchInput.value) {
+  //     setCateStt("");
+  //   } else {
+  //     setCateStt("All");
+  //   }
+  //   e.target.reset();
+  // };
 
   // useEffect(() => {
   //   dispatch(newsActions.getListOfNews(currentPage, searchInput));
