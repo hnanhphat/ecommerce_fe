@@ -17,7 +17,7 @@ const Routes = () => {
       <AlertMsg />
       <Header />
       <Switch>
-        <ProtectedRoute path="/admin" component={AdminLayout} />
+        {/* <ProtectedRoute path="/admin" component={AdminLayout} /> */}
         <Route path="/" component={PublicLayout} />
       </Switch>
       <Footer />
