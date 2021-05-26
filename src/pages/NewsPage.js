@@ -2,8 +2,9 @@ import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { newsActions } from "../redux/actions/news.actions";
+// import { newsActions } from "../redux/actions/news.actions";
 import Moment from "react-moment";
+
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
@@ -21,27 +22,27 @@ const NewsPage = () => {
 
   console.log(news);
 
-  const handleReaction = (typeVal, idVal, emojiVal) => {
-    const { targetType, targetId, emoji } = {
-      targetType: typeVal,
-      targetId: idVal,
-      emoji: emojiVal,
-    };
-    dispatch(newsActions.createReaction({ targetType, targetId, emoji }));
-  };
+  // const handleReaction = (typeVal, idVal, emojiVal) => {
+  //   const { targetType, targetId, emoji } = {
+  //     targetType: typeVal,
+  //     targetId: idVal,
+  //     emoji: emojiVal,
+  //   };
+  //   dispatch(newsActions.createReaction({ targetType, targetId, emoji }));
+  // };
 
-  const handleReview = (e, id) => {
-    e.preventDefault();
-    console.log(id);
-    console.log(e.target.comment.value);
-    const { targetType, targetId, content } = {
-      targetType: "News",
-      targetId: id,
-      content: e.target.comment.value,
-    };
-    dispatch(newsActions.createReview({ targetType, targetId, content }));
-    e.target.reset();
-  };
+  // const handleReview = (e, id) => {
+  //   e.preventDefault();
+  //   console.log(id);
+  //   console.log(e.target.comment.value);
+  //   const { targetType, targetId, content } = {
+  //     targetType: "News",
+  //     targetId: id,
+  //     content: e.target.comment.value,
+  //   };
+  //   dispatch(newsActions.createReview({ targetType, targetId, content }));
+  //   e.target.reset();
+  // };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -54,13 +55,14 @@ const NewsPage = () => {
     e.target.reset();
   };
 
-  useEffect(() => {
-    dispatch(newsActions.getListOfNews(currentPage, searchInput));
-  }, [dispatch, currentPage, searchInput]);
+  // useEffect(() => {
+  //   dispatch(newsActions.getListOfNews(currentPage, searchInput));
+  // }, [dispatch, currentPage, searchInput]);
 
   return (
     <div id="news-page" className="news-page bg-grey">
-      <MainVisual heading="News" />
+      hello
+      {/* <MainVisual heading="News" />
       {cateStt && cateStt !== "All" ? (
         <Breadcrumb branch="news" leaf={cateStt} />
       ) : (
@@ -518,7 +520,7 @@ const NewsPage = () => {
         ) : (
           ""
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
