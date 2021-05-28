@@ -17,6 +17,7 @@
 @import "./components/main-visual";
 @import "./components/modal";
 @import "./components/pagination";
+@import "./components/tab";
 
 //LAYOUT
 @import "./layout/footer";
@@ -26,6 +27,7 @@
 // PAGES
 @import "./pages/404";
 @import "./pages/admin";
+@import "./pages/card";
 @import "./pages/cart";
 @import "./pages/home";
 @import "./pages/login";

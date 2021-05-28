@@ -7,6 +7,7 @@ import AdminSidebar from "../components/AdminSidebar";
 // PAGES
 import AdminPage from "../pages/AdminPage";
 import UsersPage from "../pages/UsersPage";
+import CardPage from "../pages/CardPage";
 import ProductAddPage from "../pages/ProductAddPage";
 import NewsAddPage from "../pages/NewsAddPage";
 import ProductEditPage from "../pages/ProductEditPage";
@@ -22,6 +23,7 @@ const AdminLayout = () => {
         <Switch>
           <Route exact path="/admin" component={AdminPage} />
           <Route exact path="/admin/users" component={UsersPage} />
+          <Route exact path="/admin/cards" component={CardPage} />
           <Route exact path="/admin/product/add" component={ProductAddPage} />
           <Route exact path="/admin/news/add" component={NewsAddPage} />
           <Route exact path="/admin/orders" component={OrdersListPage} />

@@ -8,16 +8,41 @@ import { userActions } from "../redux/actions/user.actions";
 import { authActions } from "../redux/actions/auth.actions";
 import { decksActions } from "../redux/actions/decks.actions";
 import { cartActions } from "../redux/actions/cart.actions";
+import { cardActions } from "../redux/actions/card.actions";
+import { Modal, Tabs, Tab } from "react-bootstrap";
 
-const Header = () => {
+import us from "../img/us.svg";
+import vn from "../img/vn.svg";
+
+import i18n from "../i18n";
+import { withNamespaces } from "react-i18next";
+
+const Header = ({ t }) => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
   const [status, setStatus] = useState(false);
   const [search, setSearch] = useState("");
+
+  const [showModal, setShowModal] = useState(false);
+  const [daily, setDaily] = useState(false);
+  const [form, setForm] = useState(false);
+  const [online, setOnline] = useState(false);
+  const [problem, setProblem] = useState("");
+
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const carts = useSelector((state) => state.cart.carts.data);
+  const card = useSelector((state) => state.card.random.data);
+  const [random, setRandom] = useState(Math.floor(Math.random() * 2));
+  const [randomArray, setRandomArray] = useState([
+    Math.floor(Math.random() * 2),
+    Math.floor(Math.random() * 2),
+    Math.floor(Math.random() * 2),
+  ]);
+
+  console.log(card);
+  console.log(randomArray);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -42,6 +67,44 @@ const Header = () => {
       dispatch(cartActions.getUserCart());
     }, 500);
   };
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
+  const handleLanguage = (val) => {
+    localStorage.setItem("language", val);
+    changeLanguage(val);
+  };
+
+  const handleDaily = () => {
+    setDaily(true);
+    setRandom(Math.floor(Math.random() * 2));
+    dispatch(cardActions.getRandomCard(1));
+  };
+
+  const handleBack = () => {
+    setDaily(false);
+    setForm(false);
+    dispatch(cardActions.removeCard());
+  };
+
+  const handleOnline = (e) => {
+    e.preventDefault();
+    setRandomArray([
+      Math.floor(Math.random() * 2),
+      Math.floor(Math.random() * 2),
+      Math.floor(Math.random() * 2),
+    ]);
+    setForm(false);
+    setOnline(true);
+    setProblem(e.target.problemInput.value);
+    dispatch(cardActions.getRandomCard(3));
+  };
+
+  useEffect(() => {
+    changeLanguage(localStorage.getItem("language"));
+  }, []);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -121,6 +184,26 @@ const Header = () => {
               }}
             ></div>
             <div className="user__dropdown">
+              <div className="group">
+                <button
+                  className={
+                    localStorage.getItem("language") === "en" ? "active" : ""
+                  }
+                  onClick={() => handleLanguage("en")}
+                >
+                  <img src={us} alt="United State" />
+                  <span>EN</span>
+                </button>
+                <button
+                  className={
+                    localStorage.getItem("language") === "vn" ? "active" : ""
+                  }
+                  onClick={() => handleLanguage("vn")}
+                >
+                  <img src={vn} alt="Vietnamese" />
+                  <span>VN</span>
+                </button>
+              </div>
               <Link to="/profile">
                 <span>Profile</span>
                 <svg
@@ -230,25 +313,23 @@ const Header = () => {
         </div>
         <div className="other">
           <div className="other__item">
-            <div className="icon">
+            <button className="icon" onClick={() => setShowModal(true)}>
               <svg
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fas"
-                data-icon="bell"
-                className="svg-inline--fa fa-bell fa-w-14"
+                data-icon="dice"
+                className="svg-inline--fa fa-dice fa-w-20"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 448 512"
+                viewBox="0 0 640 512"
               >
                 <path
                   fill="currentColor"
-                  d="M224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64zm215.39-149.71c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71z"
+                  d="M592 192H473.26c12.69 29.59 7.12 65.2-17 89.32L320 417.58V464c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48V240c0-26.51-21.49-48-48-48zM480 376c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm-46.37-186.7L258.7 14.37c-19.16-19.16-50.23-19.16-69.39 0L14.37 189.3c-19.16 19.16-19.16 50.23 0 69.39L189.3 433.63c19.16 19.16 50.23 19.16 69.39 0L433.63 258.7c19.16-19.17 19.16-50.24 0-69.4zM96 248c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"
                 ></path>
               </svg>
-              <span className="number">0</span>
-            </div>
-            <div className="dropdown"></div>
+            </button>
           </div>
           <div className="other__item">
             <Link to="/cart" className="icon">
@@ -330,8 +411,299 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={showModal}
+        onHide={() => {
+          setShowModal(false);
+          setDaily(false);
+          setForm(false);
+          setOnline(false);
+          setProblem("");
+        }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Choose One</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body className="modal-body--large">
+          {!daily && !form && !online ? (
+            <div className="option">
+              <button className="option__btn" onClick={handleDaily}>
+                {t("Daily Card")}
+              </button>
+              <button className="option__btn" onClick={() => setForm(true)}>
+                {t("Tarot Online")}
+              </button>
+            </div>
+          ) : daily && card ? (
+            <div className="card">
+              <button className="card__btn" onClick={handleBack}>
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="arrow-circle-left"
+                  className="svg-inline--fa fa-arrow-circle-left fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zm28.9-143.6L209.4 288H392c13.3 0 24-10.7 24-24v-16c0-13.3-10.7-24-24-24H209.4l75.5-72.4c9.7-9.3 9.9-24.8.4-34.3l-11-10.9c-9.4-9.4-24.6-9.4-33.9 0L107.7 239c-9.4 9.4-9.4 24.6 0 33.9l132.7 132.7c9.4 9.4 24.6 9.4 33.9 0l11-10.9c9.5-9.5 9.3-25-.4-34.3z"
+                  ></path>
+                </svg>
+              </button>
+              <div
+                className={`card__heading ${
+                  random === 1 ? "card__heading--reversed" : ""
+                }`}
+              >
+                <div className="img">
+                  <img src={card.data.image} alt={card.data.title} />
+                </div>
+                <div className="info">
+                  <p>
+                    {card.data.title}
+                    {random === 1 ? " Reversed" : ""}
+                  </p>
+                  <span>
+                    {
+                      card.data[
+                        `element${localStorage
+                          .getItem("language")
+                          .toUpperCase()}`
+                      ]
+                    }
+                  </span>
+                </div>
+              </div>
+              <div className="card__info">
+                <Tabs defaultActiveKey="introduce">
+                  <Tab eventKey="introduce" title={t("Introduce")}>
+                    {random === 0
+                      ? card.data[
+                          `introduce${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]
+                      : card.data[
+                          `introduceReversed${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]}
+                  </Tab>
+                  <Tab eventKey="overview" title={t("Overview")}>
+                    {random === 0
+                      ? card.data[
+                          `overview${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]
+                      : card.data[
+                          `overviewReversed${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]}
+                  </Tab>
+                  <Tab eventKey="work" title={t("Work")}>
+                    {random === 0
+                      ? card.data[
+                          `work${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]
+                      : card.data[
+                          `workReversed${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]}
+                  </Tab>
+                  <Tab eventKey="love" title={t("Love")}>
+                    {random === 0
+                      ? card.data[
+                          `love${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]
+                      : card.data[
+                          `loveReversed${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]}
+                  </Tab>
+                  <Tab eventKey="finance" title={t("Finance")}>
+                    {random === 0
+                      ? card.data[
+                          `finance${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]
+                      : card.data[
+                          `financeReversed${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]}
+                  </Tab>
+                  <Tab eventKey="health" title={t("Health")}>
+                    {random === 0
+                      ? card.data[
+                          `health${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]
+                      : card.data[
+                          `healthReversed${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]}
+                  </Tab>
+                  <Tab eventKey="mentality" title={t("Mentality")}>
+                    {random === 0
+                      ? card.data[
+                          `mentality${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]
+                      : card.data[
+                          `mentalityReversed${localStorage
+                            .getItem("language")
+                            .toUpperCase()}`
+                        ]}
+                  </Tab>
+                </Tabs>
+              </div>
+            </div>
+          ) : form ? (
+            <form onSubmit={handleOnline} className="form form--unbox">
+              <button className="form__back" onClick={handleBack}>
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="arrow-circle-left"
+                  className="svg-inline--fa fa-arrow-circle-left fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zm28.9-143.6L209.4 288H392c13.3 0 24-10.7 24-24v-16c0-13.3-10.7-24-24-24H209.4l75.5-72.4c9.7-9.3 9.9-24.8.4-34.3l-11-10.9c-9.4-9.4-24.6-9.4-33.9 0L107.7 239c-9.4 9.4-9.4 24.6 0 33.9l132.7 132.7c9.4 9.4 24.6 9.4 33.9 0l11-10.9c9.5-9.5 9.3-25-.4-34.3z"
+                  ></path>
+                </svg>
+              </button>
+              <p className="form__heading">{t("Choose Your Problem")}</p>
+              <div className="form__group">
+                <div className="item item--full">
+                  <select name="problemInput">
+                    <option value="overview">{t("Overview")}</option>
+                    <option value="work">{t("Work")}</option>
+                    <option value="love">{t("Love")}</option>
+                    <option value="finance">{t("Finance")}</option>
+                    <option value="health">{t("Health")}</option>
+                    <option value="mentality">{t("Mentality")}</option>
+                  </select>
+                </div>
+              </div>
+              <button className="form__btn" type="submit">
+                Send
+              </button>
+            </form>
+          ) : online ? (
+            <div className="results">
+              <p className="results__title">
+                {t("Your Problem")}:{" "}
+                {t(problem[0].toUpperCase() + problem.slice(1))}
+              </p>
+              <div className="results__tab">
+                <Tabs defaultActiveKey="tab01">
+                  {card &&
+                    card.data.map((item, index) => (
+                      <Tab
+                        eventKey={`tab0${index + 1}`}
+                        title={t(`Card 0${index + 1}`)}
+                        key={item._id}
+                      >
+                        {randomArray[index] === 0 ? (
+                          <div className="results__item">
+                            <div className="heading">
+                              <div className="img">
+                                <img src={item.image} alt={item.title} />
+                              </div>
+                              <div className="info">
+                                <p>{item.title}</p>
+                                <span>
+                                  {
+                                    item[
+                                      `element${localStorage
+                                        .getItem("language")
+                                        .toUpperCase()}`
+                                    ]
+                                  }
+                                </span>
+                              </div>
+                            </div>
+                            <p className="content">
+                              {
+                                item[
+                                  `${
+                                    problem +
+                                    localStorage
+                                      .getItem("language")
+                                      .toUpperCase()
+                                  }`
+                                ]
+                              }
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="results__item">
+                            <div className="heading">
+                              <div className="img img--reversed">
+                                <img src={item.image} alt={item.title} />
+                              </div>
+                              <div className="info">
+                                <p>{item.title}</p>
+                                <span>
+                                  {
+                                    item[
+                                      `element${localStorage
+                                        .getItem("language")
+                                        .toUpperCase()}`
+                                    ]
+                                  }
+                                </span>
+                              </div>
+                            </div>
+                            <p className="content">
+                              {
+                                item[
+                                  `${
+                                    problem +
+                                    "Reversed" +
+                                    localStorage
+                                      .getItem("language")
+                                      .toUpperCase()
+                                  }`
+                                ]
+                              }
+                            </p>
+                          </div>
+                        )}
+                      </Tab>
+                    ))}
+                </Tabs>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
     </header>
   );
 };
 
-export default Header;
+export default withNamespaces()(Header);
